@@ -3,7 +3,7 @@
 <h2> Integrantes <h2>
 <br>
 <ul>
-  <li>Victor Lopes</li>
+  <li>Vitor Lopes</li>
   <li>Igor Souza</li>
 </ul>
 <br>
