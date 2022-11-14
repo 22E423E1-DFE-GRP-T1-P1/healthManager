@@ -1,5 +1,4 @@
 # healthManager
-<br>
 <h2> Integrantes <h2>
 <br>
 <ul>
