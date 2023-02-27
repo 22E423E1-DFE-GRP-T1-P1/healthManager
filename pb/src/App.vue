@@ -1,14 +1,14 @@
 <template>
-  <HomePage />
+  <LoginPage />
 </template>
 
 <script>
-import HomePage from './components/HomePage.vue'
+import LoginPage from './components/LoginPage.vue'
 
 export default {
   name: 'App',
   components: {
-    HomePage
+    LoginPage
   }
 }
 </script>
