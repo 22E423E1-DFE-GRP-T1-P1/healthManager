@@ -1,16 +1,26 @@
 <template>
     <div id="container">
-        <nav> 
-            <ul id="nav">
-                <img id="logo" src="../assets/logo2.png" width="250px" alt="">
-                <div id="center">
-                <li>Cadastrar-se</li>
-                <li>Entrar</li>
-                
-                </div>
-            </ul>
-        </nav>
-
+        
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="../assets/logo2.png" alt="Logo" width="250px">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{ name: 'RegisterPage' }">Cadastrar-se</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{ name: 'LoginPage' }">Entrar</router-link>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
         <div id="banner">
             <img id="imagemdoc" src="../assets/doctorwho.png" alt="">
             <ul id="bannerTexto">
@@ -58,6 +68,8 @@ body, html{
     right: 5%
 }
 
+
+
 #nav li{
     float: right;
   list-style: none;
@@ -71,10 +83,16 @@ body, html{
 }
 nav{
     background-color: #20A0D8;
-    padding: 1px;
+    
 }
 
+.navbar{
+    background-color: #20A0D8 !important;
+}
 
+.nav-item a{
+    color: white  !important;
+}
 
 #form{
     max-width: 800px; 
