@@ -29,10 +29,35 @@
 </template>
 
 <script>
+  import firebase from "firebase/app"
+  import "firebase/auth"
+  import firebaseConfig from "../firebaseConfig"
+
+  firebase.initializeApp(firebaseConfig)
+
+  export default {
+    data() {
+      return {
+        email: "",
+        password: "",
+        error: null
+      }
+    },
+    methods: {
+      login() {
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          // Mudar de página caso o usuário logar
+        }).catch(error => {
+          this.error = error.message
+        })
+      }
+    }
+  }
 </script>
 
 <style>
-        .form-container {
+.form-container {
   display: flex;
   justify-content: center;
   align-items: center;
