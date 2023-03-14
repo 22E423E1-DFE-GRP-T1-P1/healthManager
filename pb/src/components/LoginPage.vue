@@ -1,39 +1,38 @@
 <template>
-<div id="container">
-    <nav>
-        <ul id="nav" style="text-align: center;">
-            <li><img id="logo" src="img/WhatsApp Image 2023-02-03 at 21.24 1 (1).png" width="250px" alt=""></li>
-        </ul>
-    </nav>
-    <h1 style="text-align: center; font-weight: bold;">Login</h1>
-    <div class="form-container">
-        <form>
-            <div class="form-group">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" id="btn" value="Entrar">
-            </div>
-            <div class="form-group-links">
-                <a href="#">Lembrar senha</a>
-                <a href="#">Esqueci minha senha</a>
-            </div>
-        </form>
-    </div>
-</div>
+  <div id="container">
+      <nav>
+          <ul id="nav" style="text-align: center;">
+              <li><img id="logo" src="img/WhatsApp Image 2023-02-03 at 21.24 1 (1).png" width="250px" alt=""></li>
+          </ul>
+      </nav>
+      <h1 style="text-align: center; font-weight: bold;">Login</h1>
+      <div class="form-container">
+          <form>
+              <div class="form-group">
+                  <label for="email">E-mail:</label>
+                  <input type="email" id="email" name="email" required>
+              </div>
+              <div class="form-group">
+                  <label for="password">Senha:</label>
+                  <input type="password" id="password" name="password" required>
+              </div>
+              <div class="form-group">
+                  <input @click="login" id="btn" value="Entrar">
+              </div>
+              <div class="form-group-links">
+                  <a href="#">Lembrar senha</a>
+                  <a href="#">Esqueci minha senha</a>
+              </div>
+          </form>
+      </div>
+  </div>
 </template>
 
 <script>
-  import firebase from "firebase/app"
-  import "firebase/auth"
-  import firebaseConfig from "../firebaseConfig"
+  import app from "../../firebase"
+  import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 
-  firebase.initializeApp(firebaseConfig)
+  const auth = getAuth(app)
 
   export default {
     data() {
@@ -45,11 +44,15 @@
     },
     methods: {
       login() {
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        console.log(auth)
+        signInWithEmailAndPassword(auth, this.email, this.password)
         .then(() => {
-          // Mudar de página caso o usuário logar
+          // const user = userCredential.user
+          console.log("Logou")
+          alert("Logou")
         }).catch(error => {
           this.error = error.message
+          console.log(error)
         })
       }
     }
