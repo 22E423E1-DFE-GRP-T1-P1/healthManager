@@ -1,23 +1,19 @@
 <template>
-  <div id="container">
-      <nav>
-          <ul id="nav" style="text-align: center;">
-              <li><img id="logo" src="img/WhatsApp Image 2023-02-03 at 21.24 1 (1).png" width="250px" alt=""></li>
-          </ul>
-      </nav>
+  <div class="container" id="container">
+      
       <h1 style="text-align: center; font-weight: bold;">Login</h1>
       <div class="form-container">
-          <form>
+          <form @submit.prevent="login">
               <div class="form-group">
                   <label for="email">E-mail:</label>
-                  <input type="email" id="email" name="email" required>
+                  <input type="email" id="email" name="email" v-model="email" required>
               </div>
               <div class="form-group">
                   <label for="password">Senha:</label>
-                  <input type="password" id="password" name="password" required>
+                  <input type="password" id="password" v-model="password" name="password" required>
               </div>
               <div class="form-group">
-                  <input @click="login" id="btn" value="Entrar">
+                  <input type="submit" id="btn" value="Entrar">
               </div>
               <div class="form-group-links">
                   <a href="#">Lembrar senha</a>
@@ -44,11 +40,10 @@
     },
     methods: {
       login() {
-        console.log(auth)
         signInWithEmailAndPassword(auth, this.email, this.password)
         .then(() => {
           // const user = userCredential.user
-          console.log("Logou")
+          this.$router.push('/DashBoard'); 
           alert("Logou")
         }).catch(error => {
           this.error = error.message
@@ -66,6 +61,12 @@
   align-items: center;
   margin-top:10px;
   color: white;
+}
+
+
+.container
+{
+  padding: 50px;
 }
 
 form {

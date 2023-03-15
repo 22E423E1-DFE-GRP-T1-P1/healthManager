@@ -2,7 +2,24 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/components/HomePage.vue'
 import LoginPage from '@/components/LoginPage.vue'
 import RegisterPage from '@/components/RegisterPage.vue'
+import DashBoard from '@/components/DashBoard.vue'
+import { getAuth, onAuthStateChanged } from "firebase/auth"
+import app from "../../firebase"
 
+const auth = getAuth(app)
+
+
+function checarLogin() {
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
+}
 
 
 const routes = [
@@ -11,6 +28,22 @@ const routes = [
     name: 'LoginPage',
     component: LoginPage
   },
+  
+  {
+    path: '/dashboard',
+    name: 'DashBoard',
+    component: DashBoard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
+    path: '/login',
+    name: 'LoginPage',
+    component: LoginPage
+  },
+
 
   {
     path: '/',
@@ -36,10 +69,25 @@ const routes = [
 ]
 
 
+
+
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
 
 
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    checarLogin().then(userIsAuthenticated => {
+      if (userIsAuthenticated) {
+        next();
+      } else {
+        next('/');
+      }
+    });
+  } else {
+    next();
+  }
+});
 export default router

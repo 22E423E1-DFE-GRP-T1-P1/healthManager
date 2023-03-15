@@ -1,10 +1,5 @@
 <template>
 <div id="container">
-    <nav>
-        <ul id="nav" style="text-align: center;">
-            <li><img id="logo" src="" width="250px" alt=""></li>
-        </ul>
-    </nav>
     <h1 style="text-align: center; font-weight: bold;">Registrar</h1>
     <h5>Cadastre um médico em sua clínica</h5>
     <div class="form-container">

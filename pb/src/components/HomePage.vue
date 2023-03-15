@@ -40,8 +40,22 @@
                 <h2>+ Saude</h2>
             </div>
         </div>
-        
 
+        <div id="barra">
+      <div id="funcionarios">
+      <div id="colaborador">
+        <h3>Como um médico credenciado<br> você pode:</h3>
+         </div>
+    </div>
+    </div>
+
+    <ul id="bannerTexto2">
+                <li>Cadastrar pacientes</li>
+                <li>Agendar consultas</li>
+                <li>Atribuir exames</li>
+                <li>Gerenciar valores</li>
+                <li>Controlar remédios</li>
+            </ul>
 
     </div>
 </template>
@@ -68,7 +82,13 @@ body, html{
     right: 5%
 }
 
-
+#gestor, #colaborador{
+    background-color: #20A0D8;;
+    width: 100%;
+    color: white;
+    display: none;
+    
+}
 
 #nav li{
     float: right;
@@ -100,6 +120,10 @@ nav{
     
 }
 
+#imagemdoc{
+  width: 100%;
+  height: auto;
+}
 
 
 #banner{
@@ -112,7 +136,21 @@ nav{
     top: 35%;
     color: white;
     list-style: none;
+  
 
+}
+
+#bannerTexto2{
+    color: #20A0D8;
+    list-style: none;
+  display: none;
+
+}
+#bannerTexto2 li{
+    color: #20A0D8;
+    list-style: none;
+    font-size: 20px;
+    padding: 10px;
 
 }
 
@@ -145,7 +183,8 @@ nav{
 #minibanner h2{
     text-align: center;
     background-color: #20A0D8;
-    width: 200px;
+    width: 250px;
+    margin-top: 20px;
     color: white;
     padding: 20px;
 }
@@ -155,7 +194,32 @@ nav{
     margin: 0 auto;
 }
   
+@media (max-width: 1100px)
+{
+ #containerbanner{
+  display: none;
+ }
 
+ #bannerTexto{
+  display: none;
+ }
+
+ #bannerTexto2{
+    color: #20A0D8;
+    list-style: none;
+    display:block;
+
+}
+
+#gestor, #colaborador{
+    background-color: #20A0D8;;
+    width: 100%;
+    color: white;
+    display: block;
+    
+}
+
+}
 
 
 
