@@ -34,6 +34,8 @@
 
 <script>
 import app from "../../firebase"
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 
 const auth = getAuth(app)
@@ -68,9 +70,11 @@ methods: {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        console.log("Cadastrado");
+        toast.success('Usuário cadastrado');
+        this.$router.push('/DashBoard')
       }).catch((error) => {
         const errorMessage = error.message;
+        toast.error(error.message);
         console.log(errorMessage);
       })
     }
