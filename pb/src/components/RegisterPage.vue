@@ -11,17 +11,17 @@
                 <option v-for="area in areas" :value="area" :key="area.id">{{ area }}</option>
                 </select>
             </div>
-            <!----<div class="form-group">
+            <div class="form-group">
                 <label for="nome">Nome:</label>
                 <input type="name" id="name" name="name" required>
-            </div>--->
+            </div>
             <div class="form-group">
                 <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" v-model="email" required>
+                <input type="email" id="email" v-model="email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" v-model="senha" required>
+                <input type="password" id="password" v-model="password" name="password" required>
             </div>
             <div class="form-group">
                 <input type="submit" id="btn" value="Registrar">
@@ -33,6 +33,11 @@
 </template>
 
 <script>
+import app from "../../firebase"
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+
+const auth = getAuth(app)
+
 export default {
 name: 'RegisterPage',
 props: {
@@ -40,7 +45,7 @@ props: {
 },
 data() {
     return{
-selectedArea: '',
+      selectedArea: '',
       areas: [
         'Cardiologia',
         'Dermatologia',
@@ -52,12 +57,22 @@ selectedArea: '',
         'Pediatria',
         'Psiquiatria',
         'Urologia'
-      ]
+      ],
+      email: "",
+      password: ""
     }
 },
 methods: {
     register(){
-        
+      createUserWithEmailAndPassword(auth, this.email, this.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        console.log("Cadastrado");
+      }).catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      })
     }
 }
 }
