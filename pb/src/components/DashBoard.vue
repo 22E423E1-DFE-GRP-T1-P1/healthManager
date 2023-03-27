@@ -1,6 +1,6 @@
 <template>
     <div>
-      <header-home :notificacoes="notificacoes" @click="logout()" ></header-home>
+      <header-home :notificacoes="notificacoes" :click-logout="logout" ></header-home>
         <h1>Olá {{ user }}</h1>
     </div>
 </template>

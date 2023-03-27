@@ -40,7 +40,7 @@
            </router-link>
          </li>
          <li class="nav-item">
-           <a id="corTexto" class="nav-link" href="#" @click="handleLogout()" >
+           <a id="corTexto" class="nav-link" href="#" @click="logout" >
              <i class="bi bi-box-arrow-right text-warning"></i>
              Sair
            </a>
@@ -61,7 +61,8 @@
        required: true,
        
      },
-     logoutMethod: String
+     clickLogout: Function
+
    },
  
    created(){
@@ -74,8 +75,8 @@
      }
    },
    methods: {
-    handleLogout() {
-      this.logoutMethod();
+    logout() {
+        this.clickLogout();
     }
   }
  };
