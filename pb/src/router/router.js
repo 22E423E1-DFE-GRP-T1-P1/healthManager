@@ -3,6 +3,7 @@ import HomePage from '@/components/HomePage.vue'
 import LoginPage from '@/components/LoginPage.vue'
 import RegisterPage from '@/components/RegisterPage.vue'
 import DashBoard from '@/components/DashBoard.vue'
+import NewPatient from '@/components/NewPatient.vue'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import app from "../../firebase"
 
@@ -42,7 +43,6 @@ const routes = [
     path: '/login',
     name: 'LoginPage',
     component: LoginPage,
-    
   },
 
 
@@ -56,6 +56,11 @@ const routes = [
     name: 'RegisterPage',
     component: RegisterPage
   },
+  {
+    path: '/newPatient',
+    name: 'NewPatient',
+    component: NewPatient
+  }
   /*
   {
     path: '/HomePage',

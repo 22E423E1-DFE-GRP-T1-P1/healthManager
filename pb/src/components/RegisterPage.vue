@@ -35,11 +35,11 @@
 <script>
 import app from "../../firebase"
 import { useToast } from 'vue-toastification';
-const toast = useToast();
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import { getFirestore } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 
+const toast = useToast();
 const auth = getAuth(app);
 const db = getFirestore(app);
 
