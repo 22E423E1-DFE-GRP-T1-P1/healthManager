@@ -13,7 +13,7 @@
             </div>
             <div class="form-group">
                 <label for="nome">Nome:</label>
-                <input type="name" id="name" name="name" required>
+                <input type="name" id="name" v-model="nome" name="name" required>
             </div>
             <div class="form-group">
                 <label for="email">E-mail:</label>
@@ -37,8 +37,11 @@ import app from "../../firebase"
 import { useToast } from 'vue-toastification';
 const toast = useToast();
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import { getFirestore } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
-const auth = getAuth(app)
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 export default {
 name: 'RegisterPage',
@@ -47,7 +50,7 @@ props: {
 },
 data() {
     return{
-      selectedArea: '',
+      selectedArea: "",
       areas: [
         'Cardiologia',
         'Dermatologia',
@@ -60,6 +63,7 @@ data() {
         'Psiquiatria',
         'Urologia'
       ],
+      nome: "",
       email: "",
       password: ""
     }
@@ -68,6 +72,12 @@ methods: {
     register(){
       createUserWithEmailAndPassword(auth, this.email, this.password)
       .then((userCredential) => {
+        setDoc(doc(db, "Users", this.email), {
+          name: this.nome,
+          espec: this.selectedArea,
+          email: this.email
+        });
+
         const user = userCredential.user;
         console.log(user);
         toast.success('Usuário cadastrado');
