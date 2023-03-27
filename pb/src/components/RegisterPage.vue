@@ -11,17 +11,17 @@
                 <option v-for="area in areas" :value="area" :key="area.id">{{ area }}</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="email">Nome:</label>
+            <!----<div class="form-group">
+                <label for="nome">Nome:</label>
                 <input type="name" id="name" name="name" required>
-            </div>
+            </div>--->
             <div class="form-group">
                 <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" v-model="email" required>
             </div>
             <div class="form-group">
                 <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" v-model="senha" required>
             </div>
             <div class="form-group">
                 <input type="submit" id="btn" value="Registrar">

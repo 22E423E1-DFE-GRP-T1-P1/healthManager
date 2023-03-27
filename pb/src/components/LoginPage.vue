@@ -27,7 +27,8 @@
 <script>
   import app from "../../firebase"
   import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-
+  import { useToast } from 'vue-toastification';
+  const toast = useToast();
   const auth = getAuth(app)
 
   export default {
@@ -44,9 +45,11 @@
         .then(() => {
           // const user = userCredential.user
           this.$router.push('/DashBoard'); 
-          alert("Logou")
+          toast.success('Seja bem-vindo!');
         }).catch(error => {
+          
           this.error = error.message
+          toast.error(error.message);
           console.log(error)
         })
       }
