@@ -71,17 +71,15 @@ data() {
 methods: {
     register(){
       createUserWithEmailAndPassword(auth, this.email, this.password)
-      .then((userCredential) => {
+      .then(() => {
         setDoc(doc(db, "Users", this.email), {
           name: this.nome,
           espec: this.selectedArea,
           email: this.email
         });
-
-        const user = userCredential.user;
-        console.log(user);
-        toast.success('Usuário cadastrado');
+        toast.success('Bem-vindo, ' + this.nome);
         this.$router.push('/DashBoard')
+
       }).catch((error) => {
         const errorMessage = error.message;
         toast.error(error.message);
