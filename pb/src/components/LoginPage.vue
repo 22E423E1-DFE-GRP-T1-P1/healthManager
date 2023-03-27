@@ -16,8 +16,8 @@
                   <input type="submit" id="btn" value="Entrar">
               </div>
               <div class="form-group-links">
-                  <a href="#">Lembrar senha</a>
-                  <a href="#">Esqueci minha senha</a>
+                <a href="#">Lembrar senha</a>
+                <a href="#">Esqueci minha senha</a>
               </div>
           </form>
       </div>
