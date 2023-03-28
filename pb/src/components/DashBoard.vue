@@ -2,6 +2,10 @@
     <div>
       <header-home :notificacoes="notificacoes" :click-logout="logout" ></header-home>
       <h1>Olá {{ user }}</h1>
+      <div id="filtroNome">
+            <label style="padding:10px" for="filtroNome">Filtrar: </label>
+            <input type="text" id="filtroNome" placeholder="Digite um nome" v-model="filtroNome">
+        </div>
       <div class="table-responsive">
         <table class="table table-striped">
       <thead>
@@ -15,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(paciente, idpaciente) in pacientes" :key="idpaciente"  >
+        <tr v-for="(paciente, idpaciente) in filtrarPacientes()" :key="idpaciente"  >
           <td class=" col-sm-2">{{ paciente.nome }}</td> <!--Esconde em mobile-->
           <td class=" col-sm-2">{{ paciente.idade }}</td> <!--Esconde em mobile-->
           <td class="d-none d-sm-table-cell  col-sm-2">{{ paciente.sexo }}</td>
@@ -56,6 +60,7 @@ data() {
       pacienteSelecionado: null,
         user: null,
         error : null,
+        filtroNome: '',
         notificacoes: [
               { id: 1, mensagem: "Notificação 12" },
               { id: 2, mensagem: "Notificação 2" },
@@ -91,7 +96,9 @@ created() {
       })
     },
 methods: {
-
+    filtrarPacientes() {
+  return this.pacientes.filter(p => p.nome.toLowerCase().includes(this.filtroNome.toLowerCase()));
+},
     verDetalhes(index) {
         this.mostrarModal = true;
         this.pacienteSelecionado = this.pacientes[index];
