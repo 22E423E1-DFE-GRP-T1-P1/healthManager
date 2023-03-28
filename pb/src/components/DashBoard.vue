@@ -66,8 +66,10 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import app from "../../firebase";
 import HeaderHome from "./header/HeaderHome";
 import ModalPaciente from "./modal/ModalPaciente.vue";
+import { collection, query, onSnapshot, doc, getFirestore } from "firebase/firestore";
 
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 export default {
   components: {
@@ -86,22 +88,7 @@ export default {
         { id: 2, mensagem: "Notificação 2" },
         { id: 3, mensagem: "Notificação 3" },
       ],
-      pacientes: [
-        {
-          id: 1,
-          nome: "Elon Musk",
-          idade: "99",
-          sexo: "Masculino",
-          convenio: "Aprovada",
-        },
-        {
-          id: 2,
-          nome: "Bill Gates",
-          idade: "49",
-          sexo: "Masculino",
-          convenio: "Unimed",
-        },
-      ],
+      pacientes: []
     };
   },
   created() {
@@ -109,6 +96,7 @@ export default {
       if (user) {
         // usuário está logado
         this.user = user.email;
+        this.snapshotPatients();
       } else {
         this.user = null;
       }
@@ -120,6 +108,7 @@ export default {
         p.nome.toLowerCase().includes(this.filtroNome.toLowerCase())
       );
     },
+
     verDetalhes(index) {
       this.mostrarModal = true;
       this.pacienteSelecionado = this.pacientes[index];
@@ -134,6 +123,21 @@ export default {
         .catch((error) => {
           alert("Erro ao deslogar", error);
         });
+    },
+
+    snapshotPatients() {
+      const parentDocRef = doc(db, "Users", auth.currentUser.email);
+
+      const subCollectionRef = collection(parentDocRef, "Patients");
+
+      const q = query(subCollectionRef);
+
+      onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.pacientes.push(doc.data());
+          console.log(this.pacientes[0].email);
+        });
+      });
     },
   },
 };
