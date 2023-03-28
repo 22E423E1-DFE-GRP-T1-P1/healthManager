@@ -1,7 +1,7 @@
 <template>
   <div id="container">
     <h1 style="text-align: center; font-weight: bold;">Registrar</h1>
-    <h5>Cadastre um pasciente em sua clínica</h5>
+    <h5>Cadastre um paciente em sua clínica</h5>
     <div class="form-container">
         <form @submit.prevent="registerPatient">
             <div class="form-group">
@@ -39,7 +39,7 @@
 <script>
 import app from "../../firebase";
 import { getFirestore } from "firebase/firestore";
-import { doc, collection, addDoc } from "firebase/firestore";
+import { doc, collection, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const auth = getAuth(app);
@@ -71,8 +71,11 @@ export default {
 
       const subCollectionRef = collection(parentDocRef, "Patients");
 
-      addDoc(subCollectionRef, newPatient).then((res) => {
+      const docRef = doc(subCollectionRef, this.email);
+
+      setDoc(docRef, newPatient).then((res) => {
         console.log(res.id);
+        // Voltar para dashboard
       })
     }
   }
