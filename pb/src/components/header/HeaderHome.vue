@@ -24,7 +24,7 @@
            </li>
            
          <li class="nav-item">
-           <router-link class=""  :to="{ name: ''}">
+           <router-link class=""  :to="{ name: 'NewPatient'}">
            <a id="corTexto" class="nav-link" href="#">
              <i class="bi bi-person-fill text-warning"></i>
               Cadastrar Paciente  
