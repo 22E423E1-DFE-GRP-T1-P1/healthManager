@@ -51,6 +51,9 @@
         </tbody>
       </table>
     </div>
+    <div>
+      <p>{{ pacientes.length ? pacientes[0].email : '' }}</p>
+    </div>
     <div v-if="pacienteSelecionado !== null">
       <modal-paciente
         v-show="mostrarModal"
