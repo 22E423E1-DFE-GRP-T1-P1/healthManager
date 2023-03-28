@@ -3,10 +3,10 @@
     <h1 style="text-align: center; font-weight: bold;">Registrar</h1>
     <h5>Cadastre um pasciente em sua clínica</h5>
     <div class="form-container">
-        <form @submit.prevent="register">
+        <form @submit.prevent="registerPatient">
             <div class="form-group">
                 <label for="nome">Nome:</label>
-                <input type="name" id="name" v-model="nome" name="name" required>
+                <input type="name" id="name" v-model="name" name="name" required>
             </div>
             <div class="form-group">
                 <label for="email">E-mail:</label>
@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import app from "../../firebase"
+import app from "../../firebase";
 import { getFirestore } from "firebase/firestore";
-import { doc, setDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth"
+import { doc, collection, addDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -49,17 +49,30 @@ export default {
   name: "NewPatient",
   data() {
     return {
-      sexos: ["Homem", "Mulher"]
+      sexos: ["Homem", "Mulher"],
+      name: "",
+      email: "",
+      idade: 0,
+      selectedSexo: "",
+      convenio: ""
     }
   },
   methods: {
     registerPatient() {
-      setDoc(doc(db, `Users/${auth.currentUser.email}/Patients`), {
-        name: "Nome",
-        email: "Email",
-        idade: 0,
-        sex: "Afeminado",
-        convenio: "Unimed"
+      const newPatient = {
+        name: this.name,
+        email: this.email,
+        idade: this.idade,
+        sex: this.selectedSexo,
+        convenio: this.convenio
+      }
+
+      const parentDocRef = doc(db, "Users", auth.currentUser.email);
+
+      const subCollectionRef = collection(parentDocRef, "Patients");
+
+      addDoc(subCollectionRef, newPatient).then((res) => {
+        console.log(res.id);
       })
     }
   }
