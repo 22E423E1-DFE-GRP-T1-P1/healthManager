@@ -2,6 +2,7 @@
   <div class="modal-overlay">
     <div id="container">
       <div id="modal">
+        <!---
         <div class="modal-content">
           <h3>Detalhes</h3>
           <p>Nome: {{ pacienteSelecionado.nome }}</p>
@@ -9,21 +10,56 @@
           <p>Sexo {{ pacienteSelecionado.sexo }}</p>
           <p>Convênio {{ pacienteSelecionado.convenio }}</p>
         </div>
-
+          --->
         <div class="modal-content">
           <h3>Remédios</h3>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
-                <tr v-for="(remedio, idremedio) in remedios" :key="idremedio">
-                  <td class="col-sm-2">{{ remedio.nome }}</td>
-                  <td class="col-sm-2">{{ remedio.marca }}</td>
+                <tr>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Marca</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(remedio, index) in remedios" :key="index">
+                  <td>{{ remedio.nome }}</td>
+                  <td>{{ remedio.marca }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <input type="text" v-model="novoRemedio.nome" placeholder="Nome do remédio">
+            
+            <input type="text" v-model="novoRemedio.marca" placeholder="Marca do remédio">
+            <br>
+            <button @click="adicionarRemedio" id="filterButton">Adicionar</button>
+          </div>
+        </div>
+
+        <div class="modal-content">
+          <h3>Exames</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr v-for="(exame, idexame) in exames" :key="idexame">
+                  <td class="col-sm-2">{{ exame.nome }}</td>
+                  <td class="col-sm-2">{{ exame.data }}</td>
                   <td class="col-sm-2"></td>
                 </tr>
               </thead>
             </table>
           </div>
+          <div>
+            <input type="text" v-model="novoExame.nome" placeholder="Nome do remédio">
+            
+            <input type="date" v-model="novoExame.data" placeholder="Data Exame">
+            <br>
+            <button @click="adicionarExame" id="filterButton">Adicionar</button>
+          </div>
         </div>
+
         <div id="botoes">
           <button id="filterButton" @click="$emit('close')">Fechar</button>
           <button id="filterButton" @click="$emit('delete')">Excluir</button>
@@ -32,8 +68,8 @@
     </div>
   </div>
 </template>
-    
-    <script>
+
+<script>
 export default {
   props: {
     pacienteSelecionado: Object,
@@ -52,12 +88,58 @@ export default {
           marca: "49",
         },
       ],
+      exames: [
+        {
+          id: 1,
+          nome: "Exame 1",
+          data: "01/01/2021",
+        },
+        {
+          id: 2,
+          nome: "Exame 2",
+          data: "02/02/2021",
+        },
+      ],
+      novoRemedio: {
+        nome: "",
+        marca: "",
+      },
+      novoExame: {
+        nome: "",
+        data: "",
+      },
     };
+  },
+  methods: {
+    adicionarRemedio() {
+      if (this.novoRemedio.nome && this.novoRemedio.marca) {
+        const novoId = this.remedios.length + 1;
+        this.remedios.push({
+          id: novoId,
+          nome: this.novoRemedio.nome,
+          marca: this.novoRemedio.marca,
+        });
+        this.novoRemedio.nome = "";
+        this.novoRemedio.marca = "";
+      }
+    },
+     adicionarExame() {
+      if (this.novoExame.nome && this.novoExame.data) {
+        const novoId = this.exames.length + 1;
+        this.exames.push({
+          id: novoId,
+          nome: this.novoExame.nome,
+          data: this.novoExame.data,
+        });
+        this.novoExame.nome = "";
+        this.novoExame.data = "";
+      }
+    },
   },
 };
 </script>
-    
-    <style scoped>
+
+<style scoped>
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -77,10 +159,17 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
+  width: 500px;
   color: black;
 }
 
-#botoes {
+@media (max-width: 1000px)
+{
+  #modal{
+    width:300px
+  }
 }
+
+#botoes {}
+
 </style>
