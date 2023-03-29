@@ -4,17 +4,20 @@
       :notificacoes="notificacoes"
       :click-logout="logout"
     ></header-home>
-    <h1>Olá {{ user }}</h1>
-    <div id="filtroNome">
-      <label style="padding: 10px" for="filtroNome">Filtrar: </label>
+    
+    <div class="table-responsive">
+      <div id="listaPacientes">
+      <h4>Lista de pacientes</h4>
+      <div id="filtroNome">
+      <label style="padding: 10px" for="filtroNome"></label>
       <input
         type="text"
-        id="filtroNome"
+        id="filtroNomeInput"
         placeholder="Digite um nome"
         v-model="filtroNome"
       />
     </div>
-    <div class="table-responsive">
+    </div>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -33,11 +36,11 @@
             v-for="(paciente, idpaciente) in filtrarPacientes()"
             :key="idpaciente"
           >
-            <td class="col-sm-2">{{ paciente.nome }}</td>
+            <td class="col-sm-2">{{ paciente.name }}</td>
             <!--Esconde em mobile-->
             <td class="col-sm-2">{{ paciente.idade }}</td>
             <!--Esconde em mobile-->
-            <td class="d-none d-sm-table-cell col-sm-2">{{ paciente.sexo }}</td>
+            <td class="d-none d-sm-table-cell col-sm-2">{{ paciente.sex }}</td>
 
             <td style="font-weight: bold" class="col-sm-2">
               {{ paciente.convenio }}
@@ -52,7 +55,6 @@
       </table>
     </div>
     <div>
-      <p>{{ pacientes.length ? pacientes[0].email : '' }}</p>
     </div>
     <div v-if="pacienteSelecionado !== null">
       <modal-paciente
@@ -108,7 +110,7 @@ export default {
   methods: {
     filtrarPacientes() {
       return this.pacientes.filter((p) =>
-        p.nome.toLowerCase().includes(this.filtroNome.toLowerCase())
+        p.name.toLowerCase().includes(this.filtroNome.toLowerCase())
       );
     },
 
@@ -161,5 +163,23 @@ export default {
   border: 1px solid #0069a7;
   padding: 5px;
   border-radius: 20px;
+}
+
+#listaPacientes{
+  padding: 20px;
+  background-color: #38B6FF;
+  margin-top: 40px;
+  text-align: center;
+}
+
+#listaPacientes h4{
+  color: white;
+  text-align: center;
+}
+
+#filtroNomeInput{
+  padding: 10px;
+  border: 1px solid #0069a7;
+  border-radius: 20px
 }
 </style>

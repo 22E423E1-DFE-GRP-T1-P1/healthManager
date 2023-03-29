@@ -30,9 +30,9 @@
             </table>
           </div>
           <div>
-            <input type="text" v-model="novoRemedio.nome" placeholder="Nome do remédio">
+            <input id="filtroNomeInput" type="text" v-model="novoRemedio.nome" placeholder="Nome do remédio">
             
-            <input type="text" v-model="novoRemedio.marca" placeholder="Marca do remédio">
+            <input id="filtroNomeInput" type="text" v-model="novoRemedio.marca" placeholder="Marca do remédio">
             <br>
             <button @click="adicionarRemedio" id="filterButton">Adicionar</button>
           </div>
@@ -52,9 +52,9 @@
             </table>
           </div>
           <div>
-            <input type="text" v-model="novoExame.nome" placeholder="Nome do remédio">
+            <input id="filtroNomeInput" type="text" v-model="novoExame.nome" placeholder="Nome do remédio">
             
-            <input type="date" v-model="novoExame.data" placeholder="Data Exame">
+            <input id="filtroNomeInput" type="date" v-model="novoExame.data" placeholder="Data Exame">
             <br>
             <button @click="adicionarExame" id="filterButton">Adicionar</button>
           </div>

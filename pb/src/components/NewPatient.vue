@@ -41,7 +41,8 @@ import app from "../../firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, collection, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -59,25 +60,32 @@ export default {
   },
   methods: {
     registerPatient() {
-      const newPatient = {
-        name: this.name,
-        email: this.email,
-        idade: this.idade,
-        sex: this.selectedSexo,
-        convenio: this.convenio
-      }
+  const newPatient = {
+    name: this.name,
+    email: this.email,
+    idade: this.idade,
+    sex: this.selectedSexo,
+    convenio: this.convenio
+  }
 
-      const parentDocRef = doc(db, "Users", auth.currentUser.email);
+  const parentDocRef = doc(db, "Users", auth.currentUser.email);
 
-      const subCollectionRef = collection(parentDocRef, "Patients");
+  const subCollectionRef = collection(parentDocRef, "Patients");
 
-      const docRef = doc(subCollectionRef, this.email);
+  const docRef = doc(subCollectionRef, this.email);
 
-      setDoc(docRef, newPatient).then((res) => {
-        console.log(res.id);
-        // Voltar para dashboard
-      })
-    }
+  try {
+    setDoc(docRef, newPatient).then((res) => {
+      this.$router.push("/DashBoard");
+      console.log(res)
+      toast.success('Paciente cadastrado!')
+      // Voltar para dashboard
+    })
+  } catch (error) {
+    toast.error(error)
+    console.log("Erro ao registrar paciente:", error);
+  }
+}
   }
 }
 </script>

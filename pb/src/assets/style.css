@@ -11,3 +11,10 @@
   #filterButton:hover{
     background-color: #0078be;
   }
+
+  #filtroNomeInput{
+    padding: 10px;
+    border: 1px solid #0069a7;
+    border-radius: 20px;
+    margin: 5px
+  }
