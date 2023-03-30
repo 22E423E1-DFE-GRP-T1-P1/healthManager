@@ -166,7 +166,7 @@ export default {
 
     onSnapshot(qE, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        this.exames.push(doc.data());
+        this.exames = doc.data();
       });
     });
 
