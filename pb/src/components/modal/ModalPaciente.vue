@@ -25,7 +25,24 @@
       <option  v-for="fabricante in remedios.reduce((acc, rem) => acc.includes(rem.fabricante) ? acc : [...acc, rem.fabricante], [])"  :key="fabricante.id" :value="fabricante">{{ fabricante }}</option>
     </select>
   </div>
-          
+  <!----
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Marca</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(remedio, index) in remedios" :key="index">
+                  <td>{{ remedio.nome }}</td>
+                  <td>{{ remedio.marca }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          --->
         </div>
 
         <div class="modal-content">
