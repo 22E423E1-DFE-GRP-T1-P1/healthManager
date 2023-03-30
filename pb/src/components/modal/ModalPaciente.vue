@@ -63,9 +63,10 @@
                 </tr>
               </tbody>
             </table>
-            <button @click="adicionarRemedio" id="filterButton">
-              Adicionar
-            </button>
+            
+          </div>
+          <div id="botao">
+            <button @click="adicionarExame" id="filterButton">Adicionar</button>
           </div>
         </div>
 
@@ -87,7 +88,7 @@
               </tbody>
             </table>
           </div>
-          <div>
+          <div id="botao">
             <input
               id="filtroNomeInput"
               type="text"
@@ -287,10 +288,19 @@ export default {
   color: black;
 }
 
+#botao{
+  margin:20px
+}
+
 @media (max-width: 1000px) {
   #modal {
     width: 300px;
   }
+}
+
+.table-responsive{
+  overflow-y: scroll; 
+  height:150px;
 }
 
 #botoes {
