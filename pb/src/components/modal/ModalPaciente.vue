@@ -48,7 +48,6 @@
             </select>
           </div>
 
-          <!----
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -58,15 +57,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(remedio, index) in remedios" :key="index">
-                  <td>{{ remedio.nome }}</td>
-                  <td>{{ remedio.marca }}</td>
+                <tr v-for="(remedio, index) in remediosPaciente" :key="index">
+                  <td>{{ remedio.nameRemedio }}</td>
+                  <td>{{ remedio.nomeFabricante }}</td>
                 </tr>
               </tbody>
             </table>
+            <button @click="adicionarRemedio" id="filterButton">
+              Adicionar
+            </button>
           </div>
-          ---->
-          <button @click="adicionarRemedio" id="filterButton">Adicionar</button>
         </div>
 
         <div class="modal-content">
@@ -74,12 +74,17 @@
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
-                <tr v-for="(exame, idexame) in exames" :key="idexame">
-                  <td class="col-sm-2">{{ exame.nome }}</td>
-                  <td class="col-sm-2">{{ exame.data }}</td>
-                  <td class="col-sm-2"></td>
+                <tr>
+                  <th scope="col">Exame</th>
+                  <th scope="col">Data</th>
                 </tr>
               </thead>
+              <tbody>
+                <tr v-for="(exame, index) in exames" :key="index">
+                  <td>{{ exame.nameExame }}</td>
+                  <td>{{ exame.dataExame }}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
           <div>
@@ -87,7 +92,7 @@
               id="filtroNomeInput"
               type="text"
               v-model="novoExame.nome"
-              placeholder="Nome do remédio"
+              placeholder="Nome do exame"
             />
 
             <input
@@ -218,11 +223,11 @@ export default {
       setDoc(docRef, newRemedio)
         .then((res) => {
           console.log(res);
-          toast.success("Remédio Adicionado!")
+          toast.success("Remédio Adicionado!");
         })
         .catch((error) => {
           console.log(error);
-          toast.error("Erro ao adicionar remédio")
+          toast.error("Erro ao adicionar remédio");
         });
     },
     adicionarExame() {
@@ -243,11 +248,11 @@ export default {
       try {
         setDoc(docRef, newExame).then((res) => {
           console.log(res);
-          toast.success("Exame Adicionado!")
+          toast.success("Exame Adicionado!");
         });
       } catch (error) {
-        toast.success("Erro ao adicionar exame")
-        console.log( error);
+        toast.success("Erro ao adicionar exame");
+        console.log(error);
       }
     },
   },
