@@ -298,6 +298,12 @@ export default {
   }
 }
 
+@media (max-width: 1000px) {
+  #botao {
+    margin: 0px
+  }
+}
+
 .table-responsive{
   overflow-y: scroll; 
   height:150px;
