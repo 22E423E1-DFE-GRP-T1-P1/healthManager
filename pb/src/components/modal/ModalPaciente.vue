@@ -111,6 +111,8 @@
 </template>
 
 <script>
+import { useToast } from "vue-toastification";
+const toast = useToast();
 import api from "./api";
 import app from "../../../firebase";
 import {
@@ -201,7 +203,7 @@ export default {
     adicionarRemedio() {
       const newRemedio = {
         nameRemedio: this.nomeSelecionado,
-        nomeFabricante: this.fabricanteSelecionado
+        nomeFabricante: this.fabricanteSelecionado,
       };
 
       const parentDocRef = doc(db, "Users", auth.currentUser.email);
@@ -216,9 +218,11 @@ export default {
       setDoc(docRef, newRemedio)
         .then((res) => {
           console.log(res);
+          toast.success("Remédio Adicionado!")
         })
         .catch((error) => {
-          console.log("Erro ao registrar paciente:", error);
+          console.log(error);
+          toast.error("Erro ao adicionar remédio")
         });
     },
     adicionarExame() {
@@ -239,9 +243,11 @@ export default {
       try {
         setDoc(docRef, newExame).then((res) => {
           console.log(res);
+          toast.success("Exame Adicionado!")
         });
       } catch (error) {
-        console.log("Erro ao registrar paciente:", error);
+        toast.success("Erro ao adicionar exame")
+        console.log( error);
       }
     },
   },
