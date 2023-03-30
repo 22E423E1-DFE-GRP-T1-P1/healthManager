@@ -13,20 +13,42 @@
           --->
         <div class="modal-content">
           <h3>Remédios</h3>
-           <div>
-    <label for="filtroNomeInput">Nome:</label>
-    <select id="filtroNomeInput" v-model="nomeSelecionado">
-      <option value="">Remédios</option>
-      <option v-for="nome in remedios.reduce((acc, rem) => acc.includes(rem.nome) ? acc : [...acc, rem.nome], [])" :key="nome.id" :value="nome">{{ nome }}</option>
-    </select><br>
-    <label for="filtroFabricanteInput">Fabricante:</label>
-    <select id="filtroFabricanteInput" v-model="fabricanteSelecionado">
-      <option value="">Fabricante</option>
-      <option  v-for="fabricante in remedios.reduce((acc, rem) => acc.includes(rem.fabricante) ? acc : [...acc, rem.fabricante], [])"  :key="fabricante.id" :value="fabricante">{{ fabricante }}</option>
-    </select>
-  </div>
+          <div>
+            <label for="filtroNomeInput">Nome:</label>
+            <select id="filtroNomeInput" v-model="nomeSelecionado">
+              <option value="">Remédios</option>
+              <option
+                v-for="nome in remedios.reduce(
+                  (acc, rem) =>
+                    acc.includes(rem.nome) ? acc : [...acc, rem.nome],
+                  []
+                )"
+                :key="nome.id"
+                :value="nome"
+              >
+                {{ nome }}
+              </option></select
+            ><br />
+            <label for="filtroFabricanteInput">Fabricante:</label>
+            <select id="filtroFabricanteInput" v-model="fabricanteSelecionado">
+              <option value="">Fabricante</option>
+              <option
+                v-for="fabricante in remedios.reduce(
+                  (acc, rem) =>
+                    acc.includes(rem.fabricante)
+                      ? acc
+                      : [...acc, rem.fabricante],
+                  []
+                )"
+                :key="fabricante.id"
+                :value="fabricante"
+              >
+                {{ fabricante }}
+              </option>
+            </select>
+          </div>
 
-  <!----
+          <!----
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -89,6 +111,11 @@
 
 <script>
 import api from "./api";
+import app from "../../../firebase";
+import { doc, collection, getFirestore, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 export default {
   props: {
@@ -113,7 +140,7 @@ export default {
   },
   data() {
     return {
-      teste: '',
+      teste: "",
       remedios: [],
       exames: [
         {
@@ -156,15 +183,28 @@ export default {
       }
     },
     adicionarExame() {
-      if (this.novoExame.nome && this.novoExame.data) {
-        const novoId = this.exames.length + 1;
-        this.exames.push({
-          id: novoId,
-          nome: this.novoExame.nome,
-          data: this.novoExame.data,
+      const newExame = {
+        nameExame: "Teste",
+        dataExame: "03/02/2901",
+      };
+
+      console.log(this.pacienteSelecionado.email);
+
+      const parentDocRef = doc(db, "Users", auth.currentUser.email);
+      const patientsCollectionRef = collection(parentDocRef, "Patients");
+      const patientDocRef = doc(
+        patientsCollectionRef,
+        this.pacienteSelecionado.email
+      );
+      const examesPatientsRef = collection(patientDocRef, "Exames");
+      const docRef = doc(examesPatientsRef, "aaaaaaaaaaaaaaaaa");
+
+      try {
+        setDoc(docRef, newExame).then((res) => {
+          console.log(res);
         });
-        this.novoExame.nome = "";
-        this.novoExame.data = "";
+      } catch (error) {
+        console.log("Erro ao registrar paciente:", error);
       }
     },
   },
