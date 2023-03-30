@@ -4,6 +4,8 @@ import LoginPage from '@/components/LoginPage.vue'
 import RegisterPage from '@/components/RegisterPage.vue'
 import DashBoard from '@/components/DashBoard.vue'
 import NewPatient from '@/components/NewPatient.vue'
+import RotaInvalida from '@/components/RotaInvalida.vue'
+
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import app from "../../firebase"
 
@@ -24,6 +26,11 @@ function checarLogin() {
 
 
 const routes = [
+  {
+    path: '/*',
+    name: 'RotaInvalida',
+    component: RotaInvalida
+  },
   {
     path: '/login',
     name: 'LoginPage',
@@ -84,7 +91,9 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
+  if (to.matched.length === 0) {
+    next('/*');
+  } else if (to.meta.requiresAuth) {
     checarLogin().then(userIsAuthenticated => {
       if (userIsAuthenticated) {
         next();
