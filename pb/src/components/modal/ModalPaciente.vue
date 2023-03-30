@@ -66,7 +66,7 @@
             
           </div>
           <div id="botao">
-            <button @click="adicionarExame" id="filterButton">Adicionar</button>
+            <button @click="adicionarRemedio" id="filterButton">Adicionar</button>
           </div>
         </div>
 
