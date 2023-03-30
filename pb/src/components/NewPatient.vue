@@ -1,37 +1,56 @@
 <template>
   <div id="container">
-    <h1 style="text-align: center; font-weight: bold;">Registrar</h1>
+    <h1 style="text-align: center; font-weight: bold">Registrar</h1>
     <h5>Cadastre um paciente em sua clínica</h5>
     <div class="form-container">
-        <form @submit.prevent="registerPatient">
-            <div class="form-group">
-                <label for="nome">Nome:</label>
-                <input type="name" id="name" v-model="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" v-model="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="idade">Idade:</label>
-                <input type="number" id="idade" v-model="idade" name="idade" required>
-            </div>
-            <div class="form-group">
-                <label for="sexo">Escolha o sexo:</label>
-                <select name="sexo" id="sexo" v-model="selectedSexo">
-                <option value="" disabled selected>Selecione uma opção</option>
-                <option v-for="sexo in sexos" :value="sexo" :key="sexo.id">{{ sexo }}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="convenio">Convenio:</label>
-                <input type="text" id="convenio" v-model="convenio" name="convenio" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" id="btn" value="Registrar">
-            </div>
-           
-        </form>
+      <form @submit.prevent="registerPatient">
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input type="name" id="name" v-model="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input
+            type="email"
+            id="email"
+            v-model="email"
+            name="email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="idade">Idade:</label>
+          <input
+            type="number"
+            id="idade"
+            v-model="idade"
+            name="idade"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="sexo">Escolha o sexo:</label>
+          <select name="sexo" id="sexo" v-model="selectedSexo">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option v-for="sexo in sexos" :value="sexo" :key="sexo.id">
+              {{ sexo }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="convenio">Convenio:</label>
+          <input
+            type="text"
+            id="convenio"
+            v-model="convenio"
+            name="convenio"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input type="submit" id="btn" value="Registrar" />
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -41,7 +60,7 @@ import app from "../../firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, collection, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { useToast } from 'vue-toastification';
+import { useToast } from "vue-toastification";
 const toast = useToast();
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -55,39 +74,39 @@ export default {
       email: "",
       idade: 0,
       selectedSexo: "",
-      convenio: ""
-    }
+      convenio: "",
+    };
   },
   methods: {
     registerPatient() {
-  const newPatient = {
-    name: this.name,
-    email: this.email,
-    idade: this.idade,
-    sex: this.selectedSexo,
-    convenio: this.convenio
-  }
+      const newPatient = {
+        name: this.name,
+        email: this.email,
+        idade: this.idade,
+        sex: this.selectedSexo,
+        convenio: this.convenio,
+      };
 
-  const parentDocRef = doc(db, "Users", auth.currentUser.email);
+      const parentDocRef = doc(db, "Users", auth.currentUser.email);
 
-  const subCollectionRef = collection(parentDocRef, "Patients");
+      const subCollectionRef = collection(parentDocRef, "Patients");
 
-  const docRef = doc(subCollectionRef, this.email);
+      const docRef = doc(subCollectionRef, this.email);
 
-  try {
-    setDoc(docRef, newPatient).then((res) => {
-      this.$router.push("/DashBoard");
-      console.log(res)
-      toast.success('Paciente cadastrado!')
-      // Voltar para dashboard
-    })
-  } catch (error) {
-    toast.error(error)
-    console.log("Erro ao registrar paciente:", error);
-  }
-}
-  }
-}
+      try {
+        setDoc(docRef, newPatient).then((res) => {
+          this.$router.push("/DashBoard");
+          console.log(res);
+          toast.success("Paciente cadastrado!");
+          // Voltar para dashboard
+        });
+      } catch (error) {
+        toast.error(error);
+        console.log("Erro ao registrar paciente:", error);
+      }
+    },
+  },
+};
 </script>
 
 <style>

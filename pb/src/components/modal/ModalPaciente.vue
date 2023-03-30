@@ -2,15 +2,13 @@
   <div class="modal-overlay">
     <div id="container">
       <div id="modal">
-        <!---
         <div class="modal-content">
           <h3>Detalhes</h3>
-          <p>Nome: {{ pacienteSelecionado.nome }}</p>
+          <p>Nome: {{ pacienteSelecionado.email }}</p>
           <p>Idade {{ pacienteSelecionado.idade }}</p>
           <p>Sexo {{ pacienteSelecionado.sexo }}</p>
           <p>Convênio {{ pacienteSelecionado.convenio }}</p>
         </div>
-          --->
         <div class="modal-content">
           <h3>Remédios</h3>
           <div class="table-responsive">
@@ -30,11 +28,23 @@
             </table>
           </div>
           <div>
-            <input id="filtroNomeInput" type="text" v-model="novoRemedio.nome" placeholder="Nome do remédio">
-            
-            <input id="filtroNomeInput" type="text" v-model="novoRemedio.marca" placeholder="Marca do remédio">
-            <br>
-            <button @click="adicionarRemedio" id="filterButton">Adicionar</button>
+            <input
+              id="filtroNomeInput"
+              type="text"
+              v-model="novoRemedio.nome"
+              placeholder="Nome do remédio"
+            />
+
+            <input
+              id="filtroNomeInput"
+              type="text"
+              v-model="novoRemedio.marca"
+              placeholder="Marca do remédio"
+            />
+            <br />
+            <button @click="adicionarRemedio" id="filterButton">
+              Adicionar
+            </button>
           </div>
         </div>
 
@@ -52,10 +62,20 @@
             </table>
           </div>
           <div>
-            <input id="filtroNomeInput" type="text" v-model="novoExame.nome" placeholder="Nome do remédio">
-            
-            <input id="filtroNomeInput" type="date" v-model="novoExame.data" placeholder="Data Exame">
-            <br>
+            <input
+              id="filtroNomeInput"
+              type="text"
+              v-model="novoExame.nome"
+              placeholder="Nome do remédio"
+            />
+
+            <input
+              id="filtroNomeInput"
+              type="date"
+              v-model="novoExame.data"
+              placeholder="Data Exame"
+            />
+            <br />
             <button @click="adicionarExame" id="filterButton">Adicionar</button>
           </div>
         </div>
@@ -70,6 +90,12 @@
 </template>
 
 <script>
+import app from "../../../firebase";
+import { doc, collection, getFirestore, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+const auth = getAuth(app);
+const db = getFirestore(app);
+
 export default {
   props: {
     pacienteSelecionado: Object,
@@ -123,18 +149,28 @@ export default {
         this.novoRemedio.marca = "";
       }
     },
-     adicionarExame() {
-      if (this.novoExame.nome && this.novoExame.data) {
-        const novoId = this.exames.length + 1;
-        this.exames.push({
-          id: novoId,
-          nome: this.novoExame.nome,
-          data: this.novoExame.data,
-        });
-        this.novoExame.nome = "";
-        this.novoExame.data = "";
+    adicionarExame() {
+      const newExame = {
+        nameExame: "Teste",
+        dataExame: "03/02/2901"
+      };
+
+      console.log(this.pacienteSelecionado.email);
+
+      const parentDocRef = doc(db, "Users", auth.currentUser.email);
+      const patientsCollectionRef = collection(parentDocRef, "Patients");
+      const patientDocRef = doc(patientsCollectionRef, this.pacienteSelecionado.email);
+      const examesPatientsRef = collection(patientDocRef, "Exames");
+      const docRef = doc(examesPatientsRef, "Novoeee");
+
+      try {
+        setDoc(docRef, newExame).then((res) => {
+          console.log(res);
+        })
+      } catch (error) {
+        console.log("Erro ao registrar paciente:", error);
       }
-    },
+    }
   },
 };
 </script>
@@ -163,13 +199,12 @@ export default {
   color: black;
 }
 
-@media (max-width: 1000px)
-{
-  #modal{
-    width:300px
+@media (max-width: 1000px) {
+  #modal {
+    width: 300px;
   }
 }
 
-#botoes {}
-
+#botoes {
+}
 </style>
