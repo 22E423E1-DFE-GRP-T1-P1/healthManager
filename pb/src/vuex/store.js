@@ -5,28 +5,35 @@ import api from "../api";
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-    state: {
-        data: []
-    },
-    getters: {
-        getData: state => state.data
-    },
-    mutations: {
-        setData(state, data) {
-            state.data = data
-        }
-    },
-    actions: {
-        async getUserData() {
-            try {
-                const response = await api.get(`/remedios `);
-                this.remedios = response.data;
-                console.log(this.remedios)
-            } catch (error) {
-                console.error(error);
-            }
-        },
+  state: {
+    data: []
+  },
+  getters: {
+    getRemedios(state) {
+      return state.data;
     }
+  },
+  mutations: {
+    setData(state, data) {
+      state.data = data;
+    },
+    adicionarRemedio(state, remedio) {
+      state.listaRemedios.push(remedio);
+    }
+  },
+  actions: {
+    async getUserData(context) {
+      try {
+        const response = await api.get('/remedios');
+        context.commit('setData', response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    addRemedio(context, remedio) {
+      context.commit('adicionarRemedio', remedio);
+    }
+  }
 })
 
 export default store

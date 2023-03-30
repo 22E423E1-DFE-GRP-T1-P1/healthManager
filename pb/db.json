@@ -1,112 +1,116 @@
 {
     "remedios": [
-        {
-            "nome": "Dipirona",
-            "principio_ativo": "Dipirona Sódica",
-            "indicacao": "Analgésico e antitérmico",
-            "fabricante": "Sanofi"
-        },
-        {
-            "nome": "Buscopan",
-            "principio_ativo": "Butilbrometo de Escopolamina",
-            "indicacao": "Antiespasmódico",
-            "fabricante": "Boehringer Ingelheim"
-        },
-        {
-            "nome": "Novalgina",
-            "principio_ativo": "Dipirona Sódica",
-            "indicacao": "Analgésico e antitérmico",
-            "fabricante": "Sanofi"
-        },
-        {
-            "nome": "Tylenol",
-            "principio_ativo": "Paracetamol",
-            "indicacao": "Analgésico e antitérmico",
-            "fabricante": "Janssen-Cilag"
-        },
-        {
-            "nome": "Nimesulida",
-            "principio_ativo": "Nimesulida",
-            "indicacao": "Anti-inflamatório",
-            "fabricante": "EMS"
-        },
-        {
-            "nome": "Omeprazol",
-            "principio_ativo": "Omeprazol",
-            "indicacao": "Inibidor da bomba de prótons",
-            "fabricante": "Aché"
-        },
-        {
-            "nome": "Amoxicilina",
-            "principio_ativo": "Amoxicilina",
-            "indicacao": "Antibiótico",
-            "fabricante": "EMS"
-        },
-        {
-            "nome": "Cefalexina",
-            "principio_ativo": "Cefalexina",
-            "indicacao": "Antibiótico",
-            "fabricante": "Sanofi"
-        },
-        {
-            "nome": "Azitromicina",
-            "principio_ativo": "Azitromicina",
-            "indicacao": "Antibiótico",
-            "fabricante": "Pfizer"
-        },
-        {
-            "nome": "Hioscina",
-            "principio_ativo": "Hioscina",
-            "indicacao": "Antiespasmódico",
-            "fabricante": "EMS"
-        },
-        {
-            "nome": "Dexclorfeniramina",
-            "principio_ativo": "Dexclorfeniramina",
-            "indicacao": "Anti-histamínico",
-            "fabricante": "EMS"
-        },
-        {
-            "nome": "Ranitidina",
-            "principio_ativo": "Ranitidina",
-            "indicacao": "Inibidor do receptor H2",
-            "fabricante": "Biosintética"
-        },
-        {
-            "nome": "Clonazepam",
-            "principio_ativo": "Clonazepam",
-            "indicacao": "Ansiolítico",
-            "fabricante": "EMS"
-        },
-        {
-            "nome": "Fluoxetina",
-            "principio_ativo": "Fluoxetina",
-            "indicacao": "Antidepressivo",
-            "fabricante": "Aché"
-        },
-        {
-            "nome": "Sertralina",
-            "principio_ativo": "Sertralina",
-            "indicacao": "Antidepressivo",
-            "fabricante": "EMS"
-        },
-        {
-            "nome": "Losartan",
-            "principio_ativo": "Losartan",
-            "indicacao": "Anti-hipertensivo",
-            "fabricante": "EMS"
-        },
-        {
-            "nome": "Sinvastatina",
-            "principio_ativo": "Sinvastatina",
-            "indicacao": "Hipocolesterolêmico",
-            "fabricante": "EMS"
-        },
-        {
-            "nome": "Metformina",
-            "principio_ativo": "Metformina",
-            "indicacao": "Hipoglicemiante",
-            "fabricante": "Sanofi"
-        }
+      {
+        "id": 1,
+        "nome": "Dipirona",
+        "principio_ativo": "Dipirona Sódica",
+        "indicacao": "Analgésico e antitérmico",
+        "fabricante": "Sanofi"
+      },
+      {
+        "id": 2,
+        "nome": "Buscopan",
+        "principio_ativo": "Butilbrometo de Escopolamina",
+        "indicacao": "Antiespasmódico",
+        "fabricante": "Boehringer Ingelheim"
+      },
+      {
+        "id": 3,
+        "nome": "Novalgina",
+        "principio_ativo": "Dipirona Sódica",
+        "indicacao": "Analgésico e antitérmico",
+        "fabricante": "Sanofi"
+      },
+      {
+        "id": 4,
+        "nome": "Tylenol",
+        "principio_ativo": "Paracetamol",
+        "indicacao": "Analgésico e antitérmico",
+        "fabricante": "Janssen-Cilag"
+      },
+      {
+        "id": 5,
+        "nome": "Nimesulida",
+        "principio_ativo": "Nimesulida",
+        "indicacao": "Anti-inflamatório",
+        "fabricante": "EMS"
+      },
+      {
+        "id": 6,
+        "nome": "Omeprazol",
+        "principio_ativo": "Omeprazol",
+        "indicacao": "Inibidor da bomba de prótons",
+        "fabricante": "Aché"
+      },
+      {
+        "id": 7,
+        "nome": "Amoxicilina",
+        "principio_ativo": "Amoxicilina",
+        "indicacao": "Antibiótico",
+        "fabricante": "EMS"
+      },
+      {
+        "id": 8,
+        "nome": "Cefalexina",
+        "principio_ativo": "Cefalexina",
+        "indicacao": "Antibiótico",
+        "fabricante": "Sanofi"
+      },
+      {
+        "id": 9,
+        "nome": "Azitromicina",
+        "principio_ativo": "Azitromicina",
+        "indicacao": "Antibiótico",
+        "fabricante": "Pfizer"
+      },
+      {
+        "id": 10,
+        "nome": "Hioscina",
+        "principio_ativo": "Hioscina",
+        "indicacao": "Antiespasmódico",
+        "fabricante": "EMS"
+      },
+      {
+        "id": 11,
+        "nome": "Dexclorfeniramina",
+        "principio_ativo": "Dexclorfeniramina",
+        "indicacao": "Anti-histamínico",
+        "fabricante": "EMS"
+      },
+      {
+        "id": 12,
+        "nome": "Ranitidina",
+        "principio_ativo": "Ranitidina",
+        "indicacao": "Inibidor do receptor H2",
+        "fabricante": "Biosintética"
+      },
+      {
+        "id": 13,
+        "nome": "Clonazepam",
+        "principio_ativo": "Clonazepam",
+        "indicacao": "Ansiolítico",
+        "fabricante": "EMS"
+      },
+      {
+        "id": 14,
+        "nome": "Fluoxetina",
+        "principio_ativo": "Fluoxetina",
+        "indicacao": "Antidepressivo",
+        "fabricante": "Aché"
+      },
+      {
+        "id": 15,
+        "nome": "Sertralina",
+        "principio_ativo": "Sertralina",
+        "indicacao": "Antidepressivo",
+        "fabricante": "EMS"
+      },
+      {
+        "id": 16,
+        "nome": "Losartan",
+        "principio_ativo": "Losartan",
+        "indicacao": "Anti-hipertensivo",
+        "fabricante": "EMS"
+      }
     ]
 }

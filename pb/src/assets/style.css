@@ -18,3 +18,10 @@
     border-radius: 20px;
     margin: 5px
   }
+
+  #filtroFabricanteInput{
+    padding: 10px;
+    border: 1px solid #0069a7;
+    border-radius: 20px;
+    margin: 5px
+  }

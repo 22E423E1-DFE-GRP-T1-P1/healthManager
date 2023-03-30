@@ -2,50 +2,30 @@
   <div class="modal-overlay">
     <div id="container">
       <div id="modal">
+        <!---
         <div class="modal-content">
           <h3>Detalhes</h3>
-          <p>Nome: {{ pacienteSelecionado.email }}</p>
+          <p>Nome: {{ pacienteSelecionado.nome }}</p>
           <p>Idade {{ pacienteSelecionado.idade }}</p>
           <p>Sexo {{ pacienteSelecionado.sexo }}</p>
           <p>Convênio {{ pacienteSelecionado.convenio }}</p>
         </div>
+          --->
         <div class="modal-content">
           <h3>Remédios</h3>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Marca</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(remedio, index) in remedios" :key="index">
-                  <td>{{ remedio.nome }}</td>
-                  <td>{{ remedio.marca }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <input
-              id="filtroNomeInput"
-              type="text"
-              v-model="novoRemedio.nome"
-              placeholder="Nome do remédio"
-            />
-
-            <input
-              id="filtroNomeInput"
-              type="text"
-              v-model="novoRemedio.marca"
-              placeholder="Marca do remédio"
-            />
-            <br />
-            <button @click="adicionarRemedio" id="filterButton">
-              Adicionar
-            </button>
-          </div>
+           <div>
+    <label for="filtroNomeInput">Nome:</label>
+    <select id="filtroNomeInput" v-model="nomeSelecionado">
+      <option value="">Remédios</option>
+      <option v-for="nome in remedios.reduce((acc, rem) => acc.includes(rem.nome) ? acc : [...acc, rem.nome], [])" :key="nome.id" :value="nome">{{ nome }}</option>
+    </select><br>
+    <label for="filtroFabricanteInput">Fabricante:</label>
+    <select id="filtroFabricanteInput" v-model="fabricanteSelecionado">
+      <option value="">Fabricante</option>
+      <option  v-for="fabricante in remedios.reduce((acc, rem) => acc.includes(rem.fabricante) ? acc : [...acc, rem.fabricante], [])"  :key="fabricante.id" :value="fabricante">{{ fabricante }}</option>
+    </select>
+  </div>
+          
         </div>
 
         <div class="modal-content">
@@ -90,30 +70,32 @@
 </template>
 
 <script>
-import app from "../../../firebase";
-import { doc, collection, getFirestore, setDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-const auth = getAuth(app);
-const db = getFirestore(app);
+import api from "./api";
 
 export default {
   props: {
     pacienteSelecionado: Object,
   },
+  async created() {
+    try {
+      const response = await api.get("/remedios");
+      this.remedios = response.data;
+
+      for (const remedio of this.remedios) {
+        if (!this.nomesRemedios.includes(remedio.nome)) {
+          this.nomesRemedios.push(remedio.nome);
+        }
+        if (!this.fabricantesRemedios.includes(remedio.fabricante)) {
+          this.fabricantesRemedios.push(remedio.fabricante);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
   data() {
     return {
-      remedios: [
-        {
-          id: 1,
-          nome: "Elon Musk",
-          marca: "99",
-        },
-        {
-          id: 2,
-          nome: "Bill Gates",
-          marca: "49",
-        },
-      ],
+      remedios: [],
       exames: [
         {
           id: 1,
@@ -126,6 +108,11 @@ export default {
           data: "02/02/2021",
         },
       ],
+      nomesRemedios: [],
+      fabricantesRemedios: [],
+      nomeSelecionado: "",
+      fabricanteSelecionado: "",
+
       novoRemedio: {
         nome: "",
         marca: "",
@@ -150,27 +137,17 @@ export default {
       }
     },
     adicionarExame() {
-      const newExame = {
-        nameExame: "Teste",
-        dataExame: "03/02/2901"
-      };
-
-      console.log(this.pacienteSelecionado.email);
-
-      const parentDocRef = doc(db, "Users", auth.currentUser.email);
-      const patientsCollectionRef = collection(parentDocRef, "Patients");
-      const patientDocRef = doc(patientsCollectionRef, this.pacienteSelecionado.email);
-      const examesPatientsRef = collection(patientDocRef, "Exames");
-      const docRef = doc(examesPatientsRef, "Novoeee");
-
-      try {
-        setDoc(docRef, newExame).then((res) => {
-          console.log(res);
-        })
-      } catch (error) {
-        console.log("Erro ao registrar paciente:", error);
+      if (this.novoExame.nome && this.novoExame.data) {
+        const novoId = this.exames.length + 1;
+        this.exames.push({
+          id: novoId,
+          nome: this.novoExame.nome,
+          data: this.novoExame.data,
+        });
+        this.novoExame.nome = "";
+        this.novoExame.data = "";
       }
-    }
+    },
   },
 };
 </script>
