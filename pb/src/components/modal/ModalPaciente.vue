@@ -66,6 +66,7 @@
             </table>
           </div>
           ---->
+          <button @click="adicionarRemedio" id="filterButton">Adicionar</button>
         </div>
 
         <div class="modal-content">
@@ -112,7 +113,14 @@
 <script>
 import api from "./api";
 import app from "../../../firebase";
-import { doc, collection, getFirestore, setDoc } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  getFirestore,
+  setDoc,
+  query,
+  onSnapshot,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -137,23 +145,43 @@ export default {
     } catch (error) {
       console.error(error);
     }
+
+    const parentDocRef = doc(db, "Users", auth.currentUser.email);
+    const patientsCollectionRef = collection(parentDocRef, "Patients");
+    const patientDocRef = doc(
+      patientsCollectionRef,
+      this.pacienteSelecionado.email
+    );
+    // puxando exames
+    const examesPatientsRef = collection(patientDocRef, "Exames");
+
+    const qE = query(examesPatientsRef);
+
+    onSnapshot(qE, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.exames.push(doc.data());
+      });
+    });
+
+    // puxando remediosPatiente
+    const remediosPatientsRef = collection(patientDocRef, "Remedios");
+
+    const qR = query(remediosPatientsRef);
+
+    onSnapshot(qR, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.remediosPaciente.push(doc.data());
+      });
+    });
+
+    console.log(this.remediosPaciente);
   },
   data() {
     return {
       teste: "",
       remedios: [],
-      exames: [
-        {
-          id: 1,
-          nome: "Exame 1",
-          data: "01/01/2021",
-        },
-        {
-          id: 2,
-          nome: "Exame 2",
-          data: "02/02/2021",
-        },
-      ],
+      remediosPaciente: [],
+      exames: [],
       nomesRemedios: [],
       fabricantesRemedios: [],
       nomeSelecionado: "",
@@ -171,24 +199,33 @@ export default {
   },
   methods: {
     adicionarRemedio() {
-      if (this.novoRemedio.nome && this.novoRemedio.marca) {
-        const novoId = this.remedios.length + 1;
-        this.remedios.push({
-          id: novoId,
-          nome: this.novoRemedio.nome,
-          marca: this.novoRemedio.marca,
+      const newRemedio = {
+        nameRemedio: this.nomeSelecionado,
+        nomeFabricante: this.fabricanteSelecionado
+      };
+
+      const parentDocRef = doc(db, "Users", auth.currentUser.email);
+      const patientsCollectionRef = collection(parentDocRef, "Patients");
+      const patientDocRef = doc(
+        patientsCollectionRef,
+        this.pacienteSelecionado.email
+      );
+      const examesPatientsRef = collection(patientDocRef, "Remedios");
+      const docRef = doc(examesPatientsRef, this.nomeSelecionado);
+
+      setDoc(docRef, newRemedio)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log("Erro ao registrar paciente:", error);
         });
-        this.novoRemedio.nome = "";
-        this.novoRemedio.marca = "";
-      }
     },
     adicionarExame() {
       const newExame = {
-        nameExame: "Teste",
-        dataExame: "03/02/2901",
+        nameExame: this.novoExame.nome,
+        dataExame: this.novoExame.data,
       };
-
-      console.log(this.pacienteSelecionado.email);
 
       const parentDocRef = doc(db, "Users", auth.currentUser.email);
       const patientsCollectionRef = collection(parentDocRef, "Patients");
@@ -197,7 +234,7 @@ export default {
         this.pacienteSelecionado.email
       );
       const examesPatientsRef = collection(patientDocRef, "Exames");
-      const docRef = doc(examesPatientsRef, "aaaaaaaaaaaaaaaaa");
+      const docRef = doc(examesPatientsRef, this.novoExame.nome);
 
       try {
         setDoc(docRef, newExame).then((res) => {
