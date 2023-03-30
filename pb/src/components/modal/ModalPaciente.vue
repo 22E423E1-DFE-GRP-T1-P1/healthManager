@@ -165,9 +165,11 @@ export default {
     const qE = query(examesPatientsRef);
 
     onSnapshot(qE, (querySnapshot) => {
+      const tempArray = [];
       querySnapshot.forEach((doc) => {
-        this.exames = doc.data();
+        tempArray.push(doc.data());
       });
+      this.exames = tempArray;
     });
 
     // puxando remediosPatiente
@@ -176,12 +178,14 @@ export default {
     const qR = query(remediosPatientsRef);
 
     onSnapshot(qR, (querySnapshot) => {
+      const tempArray = [];
       querySnapshot.forEach((doc) => {
-        this.remediosPaciente.push(doc.data());
+        tempArray.push(doc.data());
       });
+      this.remediosPaciente = tempArray;
     });
 
-    console.log(this.remediosPaciente);
+    console.log(this.exames);
   },
   data() {
     return {
