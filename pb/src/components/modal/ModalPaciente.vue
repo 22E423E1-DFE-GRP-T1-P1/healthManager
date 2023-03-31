@@ -63,10 +63,11 @@
                 </tr>
               </tbody>
             </table>
-            
           </div>
           <div id="botao">
-            <button @click="adicionarRemedio" id="filterButton">Adicionar</button>
+            <button @click="adicionarRemedio" id="filterButton">
+              Adicionar
+            </button>
           </div>
         </div>
 
@@ -109,7 +110,7 @@
 
         <div id="botoes">
           <button id="filterButton" @click="$emit('close')">Fechar</button>
-          <button id="filterButton" @click="$emit('delete')">Excluir</button>
+          <button id="filterButton" @click="excluirPaciente">Excluir</button>
         </div>
       </div>
     </div>
@@ -128,6 +129,7 @@ import {
   setDoc,
   query,
   onSnapshot,
+  deleteDoc,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const auth = getAuth(app);
@@ -260,6 +262,23 @@ export default {
         console.log(error);
       }
     },
+    excluirPaciente() {
+      var medicoNameDocRef = doc(db, "Users", auth.currentUser.email);
+      var patientsCollectionRef = collection(medicoNameDocRef, "Patients");
+      var patientDocRef = doc(
+        patientsCollectionRef,
+        this.pacienteSelecionado.email
+      );
+
+      deleteDoc(patientDocRef)
+        .then(() => {
+          console.log("Deletou");
+          location.reload();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
   },
 };
 </script>
@@ -288,8 +307,8 @@ export default {
   color: black;
 }
 
-#botao{
-  margin:20px
+#botao {
+  margin: 20px;
 }
 
 @media (max-width: 1000px) {
@@ -300,13 +319,13 @@ export default {
 
 @media (max-width: 1000px) {
   #botao {
-    margin: 0px
+    margin: 0px;
   }
 }
 
-.table-responsive{
-  overflow-y: scroll; 
-  height:150px;
+.table-responsive {
+  overflow-y: scroll;
+  height: 150px;
 }
 
 #botoes {
