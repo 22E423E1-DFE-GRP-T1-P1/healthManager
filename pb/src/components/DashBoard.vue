@@ -71,10 +71,8 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import app from "../../firebase";
 import HeaderHome from "./header/HeaderHome";
 import ModalPaciente from "./modal/ModalPaciente.vue";
-import { collection, query, onSnapshot, doc, getFirestore } from "firebase/firestore";
 
 const auth = getAuth(app);
-const db = getFirestore(app);
 
 export default {
   components: {
@@ -101,7 +99,7 @@ export default {
       if (user) {
         // usuário está logado
         this.user = user.email;
-        this.snapshotPatients();
+        this.getPatients();
       } else {
         this.user = null;
       }
@@ -129,21 +127,11 @@ export default {
           alert("Erro ao deslogar", error);
         });
     },
-
-    snapshotPatients() {
-      const parentDocRef = doc(db, "Users", auth.currentUser.email);
-
-      const subCollectionRef = collection(parentDocRef, "Patients");
-
-      const q = query(subCollectionRef);
-
-      onSnapshot(q, (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          this.pacientes.push(doc.data());
-          console.log(this.pacientes[0].email);
-        });
-      });
-    },
+    
+    getPatients() {
+      this.$store.commit("getPatients");
+      this.pacientes = this.$store.state.patients
+    }
   },
 };
 </script>

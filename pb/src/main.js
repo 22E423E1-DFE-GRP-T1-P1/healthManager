@@ -8,8 +8,8 @@ import router from './router/router'
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
-import store from '@/store'
 import { createApp } from 'vue'
+import store from './store'
 
 const app = createApp(App)
 app.use(Toast)
